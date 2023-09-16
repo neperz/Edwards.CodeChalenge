@@ -67,8 +67,6 @@ dotnet test
 
 This will execute the unit tests and display the results in the console.
 
-## Project Structure
-
 
 ## License
 
