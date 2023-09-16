@@ -7,14 +7,7 @@
     <IncludeOpenAPIAnalyzers>true</IncludeOpenAPIAnalyzers>
     <ServerGarbageCollection>false</ServerGarbageCollection>
     <ConcurrentGarbageCollection>false</ConcurrentGarbageCollection>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <None Remove="data\data.sqlite" />
-    <None Remove="data\data.sqlite-shm" />
-    <None Remove="data\data.sqlite-wal" />
-  </ItemGroup>
-
+  </PropertyGroup> 
   <ItemGroup>    
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="NSwag.AspNetCore" Version="13.16.1" />
@@ -26,7 +19,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="data\" />
+    <None Update="data\data.sqlite">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>   
   </ItemGroup>
 
   <PropertyGroup>
