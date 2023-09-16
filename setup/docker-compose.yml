@@ -7,7 +7,7 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"    
     environment:      
-      - DB_CONNECTION_STRING__UsersDB=Data Source=/data/data.sqlite
+      - ConnectionStrings__USERDB=Data Source=/data/data.sqlite
       - ASPNETCORE_URLS=http://*:5001;http://*:5000
       - DOTNET_GCConserveMemory=1
       - DOTNET_gcServer=1

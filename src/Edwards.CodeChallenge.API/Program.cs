@@ -70,8 +70,9 @@ builder.Services.AddResponseCompression(x =>
 
 var hostEnvironment = builder.Environment;
 
-if (!hostEnvironment.IsProduction())
-{
+//poetic license to academic environment
+//if (!hostEnvironment.IsProduction())
+//{
     builder.Services.AddOpenApiDocument(document =>
     {
         document.DocumentName = "v1";
@@ -95,7 +96,7 @@ if (!hostEnvironment.IsProduction())
             };
         };
     });
-}
+//}
 
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddHttpContextAccessor();
@@ -109,10 +110,10 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IEdwardsUserRepository, EdwardsUserRepository>();
 
 builder.Services.AddDbContext<EntityContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("UsersDB")));
+    options.UseSqlite(builder.Configuration.GetConnectionString("USERDB")));
 
 builder.Services.AddSingleton<DbConnection>(conn =>
-    new SqliteConnection(builder.Configuration.GetConnectionString("UsersDB")));
+    new SqliteConnection(builder.Configuration.GetConnectionString("USERDB")));
 
 builder.Services.AddScoped<DapperContext>();
 builder.Services.AddScoped<EntityContextSeed>();
@@ -120,27 +121,30 @@ builder.Services.AddScoped<EntityContextSeed>();
 
 
 var app = builder.Build();
-app.MapGet("/ping", () => "pong");
-if (!hostEnvironment.IsProduction())
-{
-    app.UseDeveloperExceptionPage();
-    app.UseDatabaseValidation();
-    app.UseDatabaseSeed();
-}
-else
-{
-    app.UseHsts();
-}
+app.MapGet("/ping", () => new { info = "pong", db = builder.Configuration.GetConnectionString("USERDB") });
+
+//poetic license to academic environment
+//if (!hostEnvironment.IsProduction())
+//{
+app.UseDeveloperExceptionPage();
+app.UseDatabaseValidation();
+app.UseDatabaseSeed();
+//}
+//else
+//{
+//    app.UseHsts();
+//}
 
 app.UseRouting();
 //app.UseHttpsRedirection(); //poetic license to facilitate Docker configuration
 app.UseResponseCompression();
 
-if (!hostEnvironment.IsProduction())
-{
+//poetic license to academic environment
+//if (!hostEnvironment.IsProduction())
+//{
     app.UseOpenApi();
     app.UseSwaggerUi3();
-}
+//}
 
 
 app.MapControllers();

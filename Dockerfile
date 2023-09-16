@@ -13,4 +13,6 @@ RUN dotnet publish "./src/Edwards.CodeChallenge.API/Edwards.CodeChallenge.API.cs
 FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine as runtime
 WORKDIR /app
 COPY --from=development /app/out .
+# Set environment variable(s)
+ENV DB_CONNECTION_STRING__USERDB=Data Source=/data/data.sqlite
 ENTRYPOINT ["dotnet", "Edwards.CodeChallenge.API.dll"]
