@@ -5,17 +5,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
- 
 using System;
- 
 using System.Linq;
-
 namespace Edwards.CodeChallenge.Core.Tests.Fixture
 {
-
-
-
-
 
     public class TestWebApplication
     {
@@ -36,7 +29,7 @@ namespace Edwards.CodeChallenge.Core.Tests.Fixture
                 return new DapperContext(MockRepositoryBuilder.GetMockDbConnection().Object);
             });
 
-             
+
 
             return services.BuildServiceProvider(); ;
         }
@@ -53,23 +46,20 @@ namespace Edwards.CodeChallenge.Core.Tests.Fixture
                         services.Remove(descriptor);
 
                         IServiceProvider sp = InitializeServiceProvider(services);
-                        using (var scope = sp.CreateScope())
+                        using var scope = sp.CreateScope();
+                        var scopedServices = scope.ServiceProvider;
+                        var db = scopedServices.GetRequiredService<EntityContext>();
+
+
+                        db.Database.EnsureCreated();
+
+                        try
                         {
-                            var scopedServices = scope.ServiceProvider;
-                            var db = scopedServices.GetRequiredService<EntityContext>();
-
-
-                            db.Database.EnsureCreated();
-
-                            try
-                            {
-                                new EntityContextSeed(db);
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine( "An error occurred seeding the " +
-                                    "database with test messages. Error: {Message}", ex.Message);
-                            }
+                            _ = new EntityContextSeed(db);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("An error occurred seeding the database with test messages. Error: {0}", ex.Message);
                         }
                     });
 

@@ -15,7 +15,7 @@ namespace Edwards.CodeChallenge.Core.Tests.Mocks
                 firstName: x.Person.FirstName,
                 lastName: x.Person.LastName,
                 email: x.Person.Email,
-                notes : x.Person.Website
+                notes: x.Person.Website
             ));
 
 

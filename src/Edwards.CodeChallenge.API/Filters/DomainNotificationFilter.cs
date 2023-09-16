@@ -1,5 +1,5 @@
 ﻿using Edwards.CodeChallenge.Domain.Interfaces.Notifications;
- 
+
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -13,11 +13,11 @@ namespace Edwards.CodeChallenge.API.Filters;
 public class DomainNotificationFilter : IAsyncResultFilter
 {
     private readonly IDomainNotification _domainNotification;
-    
+
 
     public DomainNotificationFilter(IDomainNotification domainNotification)
     {
-        _domainNotification = domainNotification;        
+        _domainNotification = domainNotification;
     }
 
     public async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
@@ -31,7 +31,7 @@ public class DomainNotificationFilter : IAsyncResultFilter
                 JsonSerializer.Serialize(_domainNotification.Notifications
                     .Select(x => x.Value));
 
-            
+
 
             var problemDetails = new ProblemDetails
             {

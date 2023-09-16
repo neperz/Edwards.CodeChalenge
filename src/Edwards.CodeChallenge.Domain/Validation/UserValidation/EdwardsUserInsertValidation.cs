@@ -1,7 +1,6 @@
 ﻿using Edwards.CodeChallenge.Domain.Interfaces.Repository;
 using Edwards.CodeChallenge.Domain.Models;
 using FluentValidation;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,7 +13,7 @@ public class EdwardsUserInsertValidation : AbstractValidator<EdwardsUser>
     public EdwardsUserInsertValidation(IEdwardsUserRepository edwardsUserRepository)
     {
         _edwardsUserRepository = edwardsUserRepository;
-        
+
 
         RuleFor(person => person.FirstName)
                           .NotEmpty()
@@ -43,5 +42,5 @@ public class EdwardsUserInsertValidation : AbstractValidator<EdwardsUser>
 
         return edwardsUserRepository == null;
     }
-     
+
 }

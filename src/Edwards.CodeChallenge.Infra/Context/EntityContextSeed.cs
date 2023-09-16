@@ -19,8 +19,7 @@ namespace Edwards.CodeChallenge.Infra.Context
 
             if (!_context.EdwardsUsers.Any())
             {
-                var users = _context.EdwardsUsers.ToList();
-
+                 
                 _context.Add(new EdwardsUser(id: Guid.NewGuid().ToString().ToUpper(), firstName: "Zier", lastName: "Zuveiku", email: "zier@ed.com", "first note"));
                 _context.Add(new EdwardsUser(id: Guid.NewGuid().ToString().ToUpper(), firstName: "Vikehel", lastName: "Pleamakh", email: "vikehel@ed.com", "first note"));
                 _context.Add(new EdwardsUser(id: Guid.NewGuid().ToString().ToUpper(), firstName: "Diuor", lastName: "PleaBolosmakh", email: "diuor@ed.com", "first note"));

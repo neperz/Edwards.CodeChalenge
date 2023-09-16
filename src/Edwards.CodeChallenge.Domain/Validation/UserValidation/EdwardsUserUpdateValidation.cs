@@ -6,12 +6,10 @@ namespace Edwards.CodeChallenge.Domain.Validation.UserValidation;
 
 public class EdwardsUserUpdateValidation : AbstractValidator<EdwardsUser>
 {
-    private readonly IEdwardsUserRepository _edwardsUserRepository;
+     
 
-    public EdwardsUserUpdateValidation(IEdwardsUserRepository edwardsUserRepository)
-    {
-        _edwardsUserRepository = edwardsUserRepository;
-
+    public EdwardsUserUpdateValidation()
+    { 
         RuleFor(x => x.Id)
             .NotNull()
             .WithMessage("Id cannot be null");

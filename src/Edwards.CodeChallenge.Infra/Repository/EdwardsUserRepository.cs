@@ -2,7 +2,6 @@
 using Edwards.CodeChallenge.Domain.Interfaces.Repository;
 using Edwards.CodeChallenge.Domain.Models;
 using Edwards.CodeChallenge.Infra.Context;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

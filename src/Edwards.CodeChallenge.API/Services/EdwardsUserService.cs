@@ -63,7 +63,7 @@ public class EdwardsUserService : IEdwardsUserService
         //set de UUD fro user identification
         edwardsUserVM.Id = Guid.NewGuid().ToString().ToUpper();
         var model = _mapper.Map<EdwardsUser>(edwardsUserVM);
-        
+
         var validation = await new EdwardsUserInsertValidation(_edwardsUserRepository).ValidateAsync(model);
 
         if (!validation.IsValid)
@@ -86,7 +86,7 @@ public class EdwardsUserService : IEdwardsUserService
     {
         var model = _mapper.Map<EdwardsUser>(edwardsUserVM);
 
-        var validation = await new EdwardsUserUpdateValidation(_edwardsUserRepository).ValidateAsync(model);
+        var validation = await new EdwardsUserUpdateValidation().ValidateAsync(model);
 
         if (!validation.IsValid)
         {

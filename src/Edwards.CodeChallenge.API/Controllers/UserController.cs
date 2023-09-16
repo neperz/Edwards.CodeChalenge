@@ -37,8 +37,8 @@ public class UserController : ControllerBase
     [ProducesResponseType(typeof(ProblemDetails), 401)]
     [ProducesResponseType(typeof(ProblemDetails), 500)]
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<EdwardsUserViewModel>>> GetAll()=> Ok(await _edwardsUserService.GetAllAsync());
-    
+    public async Task<ActionResult<IEnumerable<EdwardsUserViewModel>>> GetAll() => Ok(await _edwardsUserService.GetAllAsync());
+
 
     /// <summary>
     /// User by Id.
@@ -185,15 +185,15 @@ public class UserController : ControllerBase
     {
         if (!Guid.TryParse(id, out Guid userId))
             return BadRequest();
-        if (edwardsUser == null || edwardsUser.Id.ToUpper() != userId.ToString().ToUpper()) 
+        if (edwardsUser == null || edwardsUser.Id.ToUpper() != userId.ToString().ToUpper())
             return BadRequest();
-        
+
 
         var edwardsUserVM = await _edwardsUserService.GetByIdAsync(new EdwardsUserIdViewModel(userId.ToString().ToUpper()));
 
-        if (edwardsUserVM == null)      
+        if (edwardsUserVM == null)
             return NoContent();
-      
+
 
         await _edwardsUserService.UpdateAsync(edwardsUser).ConfigureAwait(false);
 

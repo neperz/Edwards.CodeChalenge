@@ -10,9 +10,9 @@ using Edwards.CodeChallenge.Domain.Notifications;
 using Edwards.CodeChallenge.Infra.Context;
 using Edwards.CodeChallenge.Infra.Repository;
 using Edwards.CodeChallenge.Infra.UoW;
- 
+
 using Microsoft.AspNetCore.Builder;
- 
+
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.ResponseCompression;
@@ -69,7 +69,7 @@ builder.Services.AddResponseCompression(x =>
 });
 
 var hostEnvironment = builder.Environment;
- 
+
 if (!hostEnvironment.IsProduction())
 {
     builder.Services.AddOpenApiDocument(document =>
