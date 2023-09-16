@@ -8,12 +8,12 @@ services:
       - "host.docker.internal:host-gateway"    
     environment:      
       - DB_CONNECTION_STRING__UsersDB=Data Source=/data/data.sqlite
-      - ASPNETCORE_URLS=https://*:5001;http://*:5000
+      - ASPNETCORE_URLS=http://*:5001;http://*:5000
       - DOTNET_GCConserveMemory=1
       - DOTNET_gcServer=1
       - DOTNET_gcConcurrent=0
     expose:
-      - "80"
+      - "5000"
     deploy:
       resources:
         limits:
