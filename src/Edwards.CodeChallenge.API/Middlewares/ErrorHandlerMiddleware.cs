@@ -1,10 +1,8 @@
-﻿using Microsoft.ApplicationInsights;
-using Microsoft.AspNetCore.Diagnostics;
+﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
-using System;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -13,17 +11,16 @@ namespace Edwards.CodeChallenge.API.Middlewares;
 public class ErrorHandlerMiddleware
 {
     private readonly IWebHostEnvironment _webHostEnvironment;
-    private readonly TelemetryClient _telemetry;
 
-    public ErrorHandlerMiddleware(TelemetryClient telemetryClient, IWebHostEnvironment webHostEnvironment)
+    public ErrorHandlerMiddleware(IWebHostEnvironment webHostEnvironment)
     {
         _webHostEnvironment = webHostEnvironment;
-        _telemetry = telemetryClient;
+
     }
 
     public async Task Invoke(HttpContext context)
     {
-        _telemetry.Context.Operation.Id = Guid.NewGuid().ToString();
+
 
         var ex = context.Features.Get<IExceptionHandlerFeature>()?.Error;
 
@@ -32,7 +29,7 @@ public class ErrorHandlerMiddleware
             return;
         }
 
-        _telemetry.TrackException(ex);
+
 
         var problemDetails = new ProblemDetails
         {

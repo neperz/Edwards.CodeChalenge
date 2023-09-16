@@ -1,6 +1,6 @@
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS development
 WORKDIR /app
-
+EXPOSE 80
 # Copy everything
 COPY . .
 # Restore as distinct layers

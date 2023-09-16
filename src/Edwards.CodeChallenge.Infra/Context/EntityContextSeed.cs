@@ -1,4 +1,5 @@
 ﻿using Edwards.CodeChallenge.Domain.Models;
+using System;
 using System.Linq;
 
 namespace Edwards.CodeChallenge.Infra.Context
@@ -20,9 +21,9 @@ namespace Edwards.CodeChallenge.Infra.Context
             {
                 var users = _context.EdwardsUsers.ToList();
 
-                _context.Add(new EdwardsUser(id: 1, firstName: "Zier", lastName: "Zuveiku", email: "zier#ed.com"));
-                _context.Add(new EdwardsUser(id: 2, firstName: "Vikehel", lastName: "Pleamakh", email: "vikehel#ed.com"));
-                _context.Add(new EdwardsUser(id: 3, firstName: "Diuor", lastName: "PleaBolosmakh", email: "diuor@ed.com"));
+                _context.Add(new EdwardsUser(id: Guid.NewGuid().ToString().ToUpper(), firstName: "Zier", lastName: "Zuveiku", email: "zier@ed.com", "first note"));
+                _context.Add(new EdwardsUser(id: Guid.NewGuid().ToString().ToUpper(), firstName: "Vikehel", lastName: "Pleamakh", email: "vikehel@ed.com", "first note"));
+                _context.Add(new EdwardsUser(id: Guid.NewGuid().ToString().ToUpper(), firstName: "Diuor", lastName: "PleaBolosmakh", email: "diuor@ed.com", "first note"));
 
                 _context.SaveChanges();
             }

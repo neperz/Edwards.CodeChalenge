@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Edwards.CodeChallenge.API.ViewModels.User;
@@ -9,12 +10,12 @@ public class EdwardsUserIdViewModel
     {
 
     }
-    public EdwardsUserIdViewModel(int id)
+    public EdwardsUserIdViewModel(string id)
     {
         Id = id;
     }
 
     [FromRoute(Name = "id")]
-    [Required(ErrorMessage = "Id is mandatory")]
-    public int Id { get; set; }
+    [Required(ErrorMessage = "Id is required")]
+    public string Id { get; set; }
 }

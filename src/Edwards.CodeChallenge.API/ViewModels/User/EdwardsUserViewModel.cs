@@ -6,7 +6,7 @@ namespace Edwards.CodeChallenge.API.ViewModels.User;
 public class EdwardsUserViewModel
 {
     [JsonConstructor]
-    public EdwardsUserViewModel(int id, string firstName, string lastName, string email, string notes, DateTime dateCreated)
+    public EdwardsUserViewModel(string id, string firstName, string lastName, string email, string notes, DateTime dateCreated)
     {
         Id = id;
         FirstName = firstName;
@@ -16,7 +16,7 @@ public class EdwardsUserViewModel
         DateCreated = dateCreated;
     }
 
-    public int Id { get; set; }
+    public string Id { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; private set; }
     public string Email { get; private set; }

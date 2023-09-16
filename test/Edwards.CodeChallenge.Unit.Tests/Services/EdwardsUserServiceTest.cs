@@ -19,7 +19,7 @@ namespace Edwards.CodeChallenge.Unit.Tests.Services
 
         private readonly Mock<IDomainNotification> _domainNotificationMock;
         private readonly Mock<IUnitOfWork> _unitOfWorkMock;
-        private readonly Mock<ConcurrentDictionary<int, EdwardsUserViewModel>> _cache;
+        private readonly Mock<ConcurrentDictionary<string, EdwardsUserViewModel>> _cache;
 
         public EdwardsUserServiceTest()
         {
@@ -27,7 +27,7 @@ namespace Edwards.CodeChallenge.Unit.Tests.Services
 
             _domainNotificationMock = new Mock<IDomainNotification>();
             _unitOfWorkMock = new Mock<IUnitOfWork>();
-            _cache = new Mock<ConcurrentDictionary<int, EdwardsUserViewModel>>();
+            _cache = new Mock<ConcurrentDictionary<string, EdwardsUserViewModel>>();
         }
 
         private EdwardsUserService GetEdwardsUserService()
@@ -65,7 +65,7 @@ namespace Edwards.CodeChallenge.Unit.Tests.Services
         {
             var edwardsUserId = EdwardsUserMock.EdwardsUserIdViewModelFaker.Generate();
 
-            _edwardsUserRepositoryMock.Setup(x => x.GetByIdAsync(It.IsAny<int>()))
+            _edwardsUserRepositoryMock.Setup(x => x.GetByIdAsync(It.IsAny<string>()))
                 .ReturnsAsync(EdwardsUserMock.EdwardsUserModelFaker.Generate());
 
             var edwardsUserService = GetEdwardsUserService();
@@ -82,7 +82,7 @@ namespace Edwards.CodeChallenge.Unit.Tests.Services
         {
             var edwardsUserId = EdwardsUserMock.EdwardsUserIdViewModelFaker.Generate();
 
-            _edwardsUserRepositoryMock.Setup(x => x.GetByIdAsync(It.IsAny<int>()))
+            _edwardsUserRepositoryMock.Setup(x => x.GetByIdAsync(It.IsAny<string>()))
                 .ReturnsAsync(EdwardsUserMock.EdwardsUserModelFaker.Generate());
 
             var edwardsUserService = GetEdwardsUserService();

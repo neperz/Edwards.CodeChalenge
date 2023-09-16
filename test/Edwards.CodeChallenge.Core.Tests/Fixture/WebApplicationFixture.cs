@@ -1,15 +1,13 @@
 ﻿using Edwards.CodeChallenge.Core.Tests.Mocks.Factory;
 using Edwards.CodeChallenge.Infra.Context;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Protocols.OpenIdConnect;
-using Microsoft.IdentityModel.Tokens;
+ 
 using System;
-using System.IdentityModel.Tokens.Jwt;
+ 
 using System.Linq;
 
 namespace Edwards.CodeChallenge.Core.Tests.Fixture
@@ -38,22 +36,7 @@ namespace Edwards.CodeChallenge.Core.Tests.Fixture
                 return new DapperContext(MockRepositoryBuilder.GetMockDbConnection().Object);
             });
 
-            services.PostConfigure<JwtBearerOptions>(
-                JwtBearerDefaults.AuthenticationScheme,
-                options =>
-                {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        SignatureValidator = (token, parameters) => new JwtSecurityToken(token),
-                        ValidateIssuer = false,
-                        ValidateLifetime = false,
-                        ValidateIssuerSigningKey = false,
-                        ValidateAudience = false,
-                    };
-
-                    options.Configuration = new OpenIdConnectConfiguration();
-                });
-
+             
 
             return services.BuildServiceProvider(); ;
         }

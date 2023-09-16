@@ -1,6 +1,5 @@
 ﻿using Edwards.CodeChallenge.Domain.Interfaces.Notifications;
-using Microsoft.ApplicationInsights;
-using Microsoft.ApplicationInsights.DataContracts;
+ 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;

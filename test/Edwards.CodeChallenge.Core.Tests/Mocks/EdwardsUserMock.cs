@@ -11,10 +11,11 @@ namespace Edwards.CodeChallenge.Core.Tests.Mocks
             new Faker<EdwardsUser>()
             .CustomInstantiator(x => new EdwardsUser
             (
-                id: x.Random.Number(1, 10),
+                id: x.Random.Guid().ToString(),
                 firstName: x.Person.FirstName,
                 lastName: x.Person.LastName,
-                email: x.Person.Email
+                email: x.Person.Email,
+                notes : x.Person.Website
             ));
 
 
@@ -22,7 +23,7 @@ namespace Edwards.CodeChallenge.Core.Tests.Mocks
             new Faker<EdwardsUserViewModel>()
             .CustomInstantiator(x => new EdwardsUserViewModel
             (
-                id: x.Random.Number(1, 10),
+                id: x.Random.Guid().ToString(),
                  firstName: x.Person.FirstName,
                 lastName: x.Person.LastName,
                 email: x.Person.Email,
@@ -34,7 +35,7 @@ namespace Edwards.CodeChallenge.Core.Tests.Mocks
             new Faker<EdwardsUserIdViewModel>()
             .CustomInstantiator(x => new EdwardsUserIdViewModel
             (
-                id: x.Random.Number(1, 10)
+                id: x.Random.Guid().ToString()
             ));
 
         public static Faker<EdwardsUserNameViewModel> EdwardsUserNameViewModelFaker =>

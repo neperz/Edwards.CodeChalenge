@@ -9,25 +9,18 @@
     <ConcurrentGarbageCollection>false</ConcurrentGarbageCollection>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="AspNetCore.HealthChecks.System" Version="6.0.5" />
-    <PackageReference Include="AspNetCore.HealthChecks.UI" Version="6.0.5" />
-    <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="6.0.5" />
-    <PackageReference Include="AspNetCore.HealthChecks.UI.InMemory.Storage" Version="6.0.5" />
-    <PackageReference Include="AutoMapper" Version="11.0.1">
-      <TreatAsUsed>true</TreatAsUsed>
-    </PackageReference>
+  <ItemGroup>    
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
-    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
     <PackageReference Include="NSwag.AspNetCore" Version="13.16.1" />
-    <PackageReference Include="NSwag.Annotations" Version="13.16.1">
-      <TreatAsUsed>true</TreatAsUsed>
-    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Edwards.CodeChallenge.Domain\Edwards.CodeChallenge.Domain.csproj" />
     <ProjectReference Include="..\Edwards.CodeChallenge.Infra\Edwards.CodeChallenge.Infra.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="data\" />
   </ItemGroup>
 
   <PropertyGroup>

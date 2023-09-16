@@ -2,6 +2,7 @@
 using Edwards.CodeChallenge.Domain.Interfaces.Repository;
 using Edwards.CodeChallenge.Domain.Models;
 using Edwards.CodeChallenge.Infra.Context;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -26,13 +27,13 @@ namespace Edwards.CodeChallenge.Infra.Repository
             return await _dapperContext.DapperConnection.QueryAsync<EdwardsUser>(query, null, null, null, null);
         }
 
-        public async Task<EdwardsUser> GetByIdAsync(int id)
+        public async Task<EdwardsUser> GetByIdAsync(string id)
         {
             var query = @"SELECT Id, FirstName, LastName, Email, Notes, DateCreated
                             FROM User
                           WHERE Id = @Id";
 
-            return (await _dapperContext.DapperConnection.QueryAsync<EdwardsUser>(query, new { Id = id })).FirstOrDefault();
+            return (await _dapperContext.DapperConnection.QueryAsync<EdwardsUser>(query, new { Id = id.ToString() })).FirstOrDefault();
         }
 
 

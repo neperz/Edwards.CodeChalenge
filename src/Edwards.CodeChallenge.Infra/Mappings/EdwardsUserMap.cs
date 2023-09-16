@@ -12,9 +12,10 @@ namespace Edwards.CodeChallenge.Infra.Mappings
 
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id)
-                .HasColumnType("INTEGER")
+                 .HasColumnType("TEXT")
+                 .HasMaxLength(36)
+                 .IsRequired();
 
-                .IsRequired();
             builder.Property(x => x.FirstName)
                 .HasColumnType("TEXT")
                 .HasMaxLength(30)

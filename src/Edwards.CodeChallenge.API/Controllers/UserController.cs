@@ -2,6 +2,7 @@
 using Edwards.CodeChallenge.API.ViewModels.User;
 using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -157,7 +158,7 @@ public class UserController : ControllerBase
             return NoContent();
         }
 
-        return Created(nameof(GetByName), await _edwardsUserService.AddAsync(edwardsUser).ConfigureAwait(false));
+        return Created(nameof(PostUserAsync), await _edwardsUserService.AddAsync(edwardsUser).ConfigureAwait(false));
     }
 
     /// <summary>
@@ -180,19 +181,19 @@ public class UserController : ControllerBase
     [ProducesResponseType(typeof(ProblemDetails), 401)]
     [ProducesResponseType(typeof(ProblemDetails), 500)]
     [HttpPut("{id}")]
-    public async Task<ActionResult> PutUser(int id, [FromBody] EdwardsUserViewModel edwardsUser)
+    public async Task<ActionResult> PutUser(string id, [FromBody] EdwardsUserViewModel edwardsUser)
     {
-        if (edwardsUser == null || edwardsUser.Id != id)
-        {
+        if (!Guid.TryParse(id, out Guid userId))
             return BadRequest();
-        }
+        if (edwardsUser == null || edwardsUser.Id.ToUpper() != userId.ToString().ToUpper()) 
+            return BadRequest();
+        
 
-        var edwardsUserVM = await _edwardsUserService.GetByIdAsync(new EdwardsUserIdViewModel(id));
+        var edwardsUserVM = await _edwardsUserService.GetByIdAsync(new EdwardsUserIdViewModel(userId.ToString().ToUpper()));
 
-        if (edwardsUserVM == null)
-        {
+        if (edwardsUserVM == null)      
             return NoContent();
-        }
+      
 
         await _edwardsUserService.UpdateAsync(edwardsUser).ConfigureAwait(false);
 

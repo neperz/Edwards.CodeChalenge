@@ -6,19 +6,20 @@ public class EdwardsUser
 {
     protected EdwardsUser() { }
 
-    public EdwardsUser(int id, string firstName, string lastName, string email) : this(firstName, lastName, email)
+    public EdwardsUser(string id, string firstName, string lastName, string email, string notes) : this(firstName, lastName, email, notes)
     {
         Id = id;
     }
 
-    public EdwardsUser(string firstName, string lastName, string email)
+    public EdwardsUser(string firstName, string lastName, string email, string notes)
     {
         FirstName = firstName;
         LastName = lastName;
         Email = email;
+        Notes = notes;
     }
 
-    public int Id { get; private set; }
+    public string Id { get; private set; }
     public string FirstName { get; private set; }
     public string LastName { get; private set; }
     public string Email { get; private set; }

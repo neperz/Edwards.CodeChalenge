@@ -1,22 +1,7 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
- 
-using System.Data.Common;
-using Edwards.CodeChallenge.API.Extensions; 
-
+﻿using Edwards.CodeChallenge.API.Extensions;
 using Edwards.CodeChallenge.API.Filters;
-using Microsoft.AspNetCore.ResponseCompression;
-using Microsoft.AspNetCore.Server.Kestrel.Core;
-using NSwag;
-using System.IO.Compression;
-using System.Text.Json.Serialization;
-using HealthChecks.UI.Client;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Edwards.CodeChallenge.API.Services.Interfaces;
 using Edwards.CodeChallenge.API.Services;
+using Edwards.CodeChallenge.API.Services.Interfaces;
 using Edwards.CodeChallenge.API.ViewModels.User;
 using Edwards.CodeChallenge.Domain.Interfaces.Notifications;
 using Edwards.CodeChallenge.Domain.Interfaces.Repository;
@@ -25,14 +10,25 @@ using Edwards.CodeChallenge.Domain.Notifications;
 using Edwards.CodeChallenge.Infra.Context;
 using Edwards.CodeChallenge.Infra.Repository;
 using Edwards.CodeChallenge.Infra.UoW;
+ 
+using Microsoft.AspNetCore.Builder;
+ 
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using NSwag;
 using System.Collections.Concurrent;
+using System.Data.Common;
 using System.IO;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore.Storage;
-using System;
-using Edwards.CodeChallenge.Domain.Models;
+using System.IO.Compression;
+using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 
 var webApplicationOptions = new WebApplicationOptions
 {
@@ -40,7 +36,8 @@ var webApplicationOptions = new WebApplicationOptions
     Args = args,
 };
 
-var builder = WebApplication.CreateBuilder(webApplicationOptions);
+//var builder = WebApplication.CreateBuilder(webApplicationOptions);
+var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration.AddEnvironmentVariables();
 
@@ -72,23 +69,7 @@ builder.Services.AddResponseCompression(x =>
 });
 
 var hostEnvironment = builder.Environment;
-
-if (hostEnvironment.ApplicationName != "testhost")
-{
-    var healthCheck = builder.Services.AddHealthChecksUI(setupSettings: setup =>
-    {
-        setup.DisableDatabaseMigrations();
-        setup.MaximumHistoryEntriesPerEndpoint(6);
-    }).AddInMemoryStorage();
-
-    var healthCheckBuilder = healthCheck.Services.AddHealthChecks();
-
-    // 500 mb
-    healthCheckBuilder.AddProcessAllocatedMemoryHealthCheck(500 * 1024 * 1024, "Process Memory", tags: new[] { "self" });
-    // 500 mb
-    healthCheckBuilder.AddPrivateMemoryHealthCheck(1500 * 1024 * 1024, "Private memory", tags: new[] { "self" });
-}
-
+ 
 if (!hostEnvironment.IsProduction())
 {
     builder.Services.AddOpenApiDocument(document =>
@@ -103,9 +84,9 @@ if (!hostEnvironment.IsProduction())
             configure.Info.TermsOfService = "None";
             configure.Info.Contact = new OpenApiContact()
             {
-                Name = "Felipe1s Squad",
+                Name = "Felipe",
                 Email = "neperz@gmail.com",
-                Url = "https://felipe.wikicode.com.br"
+                Url = "https://github.com/neperz/Edwards.CodeChalenge"
             };
             configure.Info.License = new OpenApiLicense()
             {
@@ -118,9 +99,9 @@ if (!hostEnvironment.IsProduction())
 
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddHttpContextAccessor();
- 
+
 builder.Services.AddScoped<IEdwardsUserService, EdwardsUserService>();
-builder.Services.AddSingleton(_ => new ConcurrentDictionary<int, EdwardsUserViewModel>());
+builder.Services.AddSingleton(_ => new ConcurrentDictionary<string, EdwardsUserViewModel>());
 
 builder.Services.AddScoped<IDomainNotification, DomainNotification>();
 
@@ -137,9 +118,9 @@ builder.Services.AddScoped<DapperContext>();
 builder.Services.AddScoped<EntityContextSeed>();
 
 
-// Configure the application
-var app = builder.Build();
 
+var app = builder.Build();
+app.MapGet("/ping", () => "pong");
 if (!hostEnvironment.IsProduction())
 {
     app.UseDeveloperExceptionPage();
@@ -152,7 +133,7 @@ else
 }
 
 app.UseRouting();
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection(); //poetic license to facilitate Docker configuration
 app.UseResponseCompression();
 
 if (!hostEnvironment.IsProduction())
@@ -161,28 +142,20 @@ if (!hostEnvironment.IsProduction())
     app.UseSwaggerUi3();
 }
 
- 
-
-if (hostEnvironment.ApplicationName != "testhost")
-{
-    app.MapHealthChecks("/health", new HealthCheckOptions
-    {
-        Predicate = r => r.Tags.Contains("self"),
-        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-    });
-    app.MapHealthChecks("/ready", new HealthCheckOptions
-    {
-        Predicate = r => r.Tags.Contains("services"),
-        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-    });
-    app.MapHealthChecksUI(setup =>
-    {
-        setup.UIPath = "/health-ui";
-    });
-}
 
 app.MapControllers();
 
-
+app.UseExceptionHandler(exceptionHandlerApp =>
+{
+    exceptionHandlerApp.Run(context =>
+    {
+        context.Response.StatusCode = StatusCodes.Status400BadRequest;
+        context.Response.ContentType = context.Request.ContentType;
+        context.Response.Body = context.Request.Body;
+        return Task.CompletedTask;
+    });
+});
 
 app.Run();
+
+public partial class Program { }

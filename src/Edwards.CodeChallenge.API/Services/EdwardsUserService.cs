@@ -6,6 +6,7 @@ using Edwards.CodeChallenge.Domain.Interfaces.Repository;
 using Edwards.CodeChallenge.Domain.Interfaces.UoW;
 using Edwards.CodeChallenge.Domain.Models;
 using Edwards.CodeChallenge.Domain.Validation.UserValidation;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -18,8 +19,8 @@ public class EdwardsUserService : IEdwardsUserService
     private readonly IDomainNotification _domainNotification;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
-    private readonly ConcurrentDictionary<int, EdwardsUserViewModel> _cache;
-    public EdwardsUserService(IEdwardsUserRepository edwardsUserRepository, ConcurrentDictionary<int, EdwardsUserViewModel> cache, IDomainNotification domainNotification, IUnitOfWork unitOfWork, IMapper mapper)
+    private readonly ConcurrentDictionary<string, EdwardsUserViewModel> _cache;
+    public EdwardsUserService(IEdwardsUserRepository edwardsUserRepository, ConcurrentDictionary<string, EdwardsUserViewModel> cache, IDomainNotification domainNotification, IUnitOfWork unitOfWork, IMapper mapper)
     {
         _edwardsUserRepository = edwardsUserRepository;
         _domainNotification = domainNotification;
@@ -59,8 +60,10 @@ public class EdwardsUserService : IEdwardsUserService
     public async Task<EdwardsUserViewModel> AddAsync(EdwardsUserViewModel edwardsUserVM)
     {
         EdwardsUserViewModel viewModel = null;
+        //set de UUD fro user identification
+        edwardsUserVM.Id = Guid.NewGuid().ToString().ToUpper();
         var model = _mapper.Map<EdwardsUser>(edwardsUserVM);
-
+        
         var validation = await new EdwardsUserInsertValidation(_edwardsUserRepository).ValidateAsync(model);
 
         if (!validation.IsValid)
