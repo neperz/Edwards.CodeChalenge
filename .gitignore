@@ -362,3 +362,5 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /setup/data
+/src/Edwards.CodeChallenge.API/data/data.sqlite-shm
+/src/Edwards.CodeChallenge.API/data/data.sqlite-wal
