@@ -1,22 +1,22 @@
 ﻿using System.Data.Common;
 
-namespace Edwards.CodeChallenge.Infra.Context
+namespace Edwards.CodeChallenge.Infra.Context;
+
+public class DapperContext
 {
-    public class DapperContext
+    private readonly DbConnection _conn;
+
+    public DapperContext(DbConnection conn)
     {
-        private readonly DbConnection _conn;
+        _conn = conn;
+    }
 
-        public DapperContext(DbConnection conn)
+    public DbConnection DapperConnection
+    {
+        get
         {
-            _conn = conn;
-        }
-
-        public DbConnection DapperConnection
-        {
-            get
-            {
-                return _conn;
-            }
+            return _conn;
         }
     }
 }
+

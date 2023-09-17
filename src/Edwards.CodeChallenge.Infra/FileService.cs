@@ -1,45 +1,46 @@
 ﻿using Edwards.CodeChallenge.Domain.Interfaces;
 using Edwards.CodeChallenge.Domain.Models;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 using System;
 using System.IO;
+using System.Text.Json;
 
-namespace  Edwards.CodeChallenge.Infra
+namespace Edwards.CodeChallenge.Infra;
+
+public class FileService : IFileService
 {
-    public class FileService : IFileService
+    private readonly FileConfig _fileConfig;
+
+    public FileService(IOptions<FileConfig> fileConfig)
     {
-        private readonly FileConfig _fileConfig;
+        _fileConfig = fileConfig.Value;
+    }
 
-        public FileService(IOptions<FileConfig> fileConfig)
+    public FileServiceResult DumpDataToDisk<T>(T data)
+    {
+        try
         {
-            _fileConfig = fileConfig.Value;
+            if (string.IsNullOrWhiteSpace(_fileConfig.FilePath))
+            {
+                throw new IOException("Error writing data to file.");
+            }
+            string jsonData = JsonSerializer.Serialize(data);
+
+            File.WriteAllText(_fileConfig.FilePath, jsonData);
+
+            return new FileServiceResult
+            {
+                Success = true
+            };
         }
-
-        public FileServiceResult DumpDataToDisk<T>(T data)
+        catch (Exception ex)
         {
-            try
+            return new FileServiceResult
             {
-                if (string.IsNullOrWhiteSpace(_fileConfig.FilePath))
-                {
-                    throw new IOException("Error writing data to file.");
-                }
-                var json = JsonConvert.SerializeObject(data);
-                File.WriteAllText(_fileConfig.FilePath, json);
-
-                return new FileServiceResult
-                {
-                    Success = true
-                };
-            }
-            catch (Exception ex)
-            {
-                return new FileServiceResult
-                {
-                    Success = false,
-                    ErrorMessage = ex.Message
-                };
-            }
+                Success = false,
+                ErrorMessage = ex.Message
+            };
         }
     }
 }
+

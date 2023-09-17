@@ -3,8 +3,8 @@ using Edwards.CodeChallenge.Infra.Context;
 using Microsoft.EntityFrameworkCore;
 using System;
 
-namespace Edwards.CodeChallenge.Infra.Repository
-{
+namespace Edwards.CodeChallenge.Infra.Repository;
+
     public class EntityBaseRepository<TEntity> : IEntityBaseRepository<TEntity> where TEntity : class
     {
         protected readonly EntityContext Db;
@@ -37,4 +37,3 @@ namespace Edwards.CodeChallenge.Infra.Repository
             GC.SuppressFinalize(this);
         }
     }
-}

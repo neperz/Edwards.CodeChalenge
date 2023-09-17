@@ -5,8 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 
-namespace Edwards.CodeChallenge.Infra.Context
-{
+namespace Edwards.CodeChallenge.Infra.Context;
+
     public class EntityContext : DbContext
     {
         private readonly IFileService _fileService;
@@ -48,4 +48,4 @@ namespace Edwards.CodeChallenge.Infra.Context
             
         }
     }
-}
+

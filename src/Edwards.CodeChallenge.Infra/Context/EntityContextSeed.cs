@@ -2,30 +2,28 @@
 using System;
 using System.Linq;
 
-namespace Edwards.CodeChallenge.Infra.Context
+namespace Edwards.CodeChallenge.Infra.Context;
+public class EntityContextSeed
 {
-    public class EntityContextSeed
+    private readonly EntityContext _context;
+
+    public EntityContextSeed(EntityContext context)
     {
-        private readonly EntityContext _context;
+        this._context = context;
+        this.SeedInitial();
+    }
 
-        public EntityContextSeed(EntityContext context)
+    public void SeedInitial()
+    {
+
+        if (!_context.EdwardsUsers.Any())
         {
-            this._context = context;
-            this.SeedInitial();
-        }
 
-        public void SeedInitial()
-        {
+            _context.Add(new EdwardsUser(id: Guid.NewGuid().ToString().ToUpper(), firstName: "Zier", lastName: "Zuveiku", email: "zier@ed.com", "first note"));
+            _context.Add(new EdwardsUser(id: Guid.NewGuid().ToString().ToUpper(), firstName: "Vikehel", lastName: "Pleamakh", email: "vikehel@ed.com", "first note"));
+            _context.Add(new EdwardsUser(id: Guid.NewGuid().ToString().ToUpper(), firstName: "Diuor", lastName: "PleaBolosmakh", email: "diuor@ed.com", "first note"));
 
-            if (!_context.EdwardsUsers.Any())
-            {
-                 
-                _context.Add(new EdwardsUser(id: Guid.NewGuid().ToString().ToUpper(), firstName: "Zier", lastName: "Zuveiku", email: "zier@ed.com", "first note"));
-                _context.Add(new EdwardsUser(id: Guid.NewGuid().ToString().ToUpper(), firstName: "Vikehel", lastName: "Pleamakh", email: "vikehel@ed.com", "first note"));
-                _context.Add(new EdwardsUser(id: Guid.NewGuid().ToString().ToUpper(), firstName: "Diuor", lastName: "PleaBolosmakh", email: "diuor@ed.com", "first note"));
-
-                _context.SaveChanges();
-            }
+            _context.SaveChanges();
         }
     }
 }

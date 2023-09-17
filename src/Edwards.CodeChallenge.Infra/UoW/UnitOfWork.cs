@@ -3,8 +3,8 @@ using Edwards.CodeChallenge.Infra.Context;
 using Microsoft.EntityFrameworkCore.Storage;
 using System;
 
-namespace Edwards.CodeChallenge.Infra.UoW
-{
+namespace Edwards.CodeChallenge.Infra.UoW;
+
     public class UnitOfWork : IUnitOfWork
     {
         public readonly EntityContext _entityContext;
@@ -48,4 +48,4 @@ namespace Edwards.CodeChallenge.Infra.UoW
             GC.SuppressFinalize(this);
         }
     }
-}
+

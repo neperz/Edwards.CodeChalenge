@@ -2,8 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Edwards.CodeChallenge.Infra.Mappings
-{
+namespace Edwards.CodeChallenge.Infra.Mappings;
+
     public class EdwardsUserMap : IEntityTypeConfiguration<EdwardsUser>
     {
         public void Configure(EntityTypeBuilder<EdwardsUser> builder)
@@ -43,4 +43,4 @@ namespace Edwards.CodeChallenge.Infra.Mappings
 
         }
     }
-}
+
