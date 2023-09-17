@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "42E3A1E0-953D-47EB-A54C-C1CDEA029C08",
+    "FirstName": "Zier",
+    "LastName": "Zuveiku",
+    "Email": "zier@ed.com",
+    "Notes": "first note",
+    "DateCreated": "2023-09-16T15:33:38.0453253"
+  },
+  {
+    "Id": "65F2EAFB-ACE2-4401-A7B8-17B9E2404B41",
+    "FirstName": "Diuor",
+    "LastName": "PleaBolosmakh",
+    "Email": "diuor@ed.com",
+    "Notes": "first note",
+    "DateCreated": "2023-09-16T15:33:38.0546534"
+  },
+  {
+    "Id": "F8DDFE45-D128-4B7D-AAD9-9765BECFA9EC",
+    "FirstName": "Vikehel",
+    "LastName": "Pleamakh",
+    "Email": "vikehel@ed.com",
+    "Notes": "first note",
+    "DateCreated": "2023-09-16T15:33:38.054605"
+  },
+  {
+    "Id": "73B54BFE-F02A-46AB-92B3-8E737B93DB0B",
+    "FirstName": "Zie Ir",
+    "LastName": "Zuveiku I",
+    "Email": "ziexr@ed.com",
+    "Notes": "first note",
+    "DateCreated": "2023-09-17T09:36:23.9202049"
+  },
+  {
+    "Id": "0F746B57-0A9F-4869-A687-58E88789BC37",
+    "FirstName": "Zie Ir",
+    "LastName": "Zuveiku I",
+    "Email": "ziexdr@ed.com",
+    "Notes": "first note",
+    "DateCreated": "2023-09-17T09:37:36.8714102"
+  },
+  {
+    "Id": "6808B7DF-0339-47D7-B018-9697357592E2",
+    "FirstName": "Zier S",
+    "LastName": "Zuveiku S",
+    "Email": "ziers@ed.com",
+    "Notes": "first note",
+    "DateCreated": "2023-09-17T09:57:19.0846926-03:00"
+  }
+]

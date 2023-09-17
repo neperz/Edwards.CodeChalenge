@@ -14,12 +14,12 @@ public class EdwardsUserInsertValidation : AbstractValidator<EdwardsUser>
     {
         _edwardsUserRepository = edwardsUserRepository;
 
-
+        // TODO: First and last name must not have numbers
         RuleFor(person => person.FirstName)
                           .NotEmpty()
                           .Matches(@"^[a-zA-Z\s]+$")
                           .WithMessage("First name must not contain numbers.");
-
+        // TODO: First and last name must not have numbers
         RuleFor(person => person.LastName)
             .NotEmpty()
             .Matches(@"^[a-zA-Z\s]+$")
@@ -29,9 +29,9 @@ public class EdwardsUserInsertValidation : AbstractValidator<EdwardsUser>
             .NotEmpty()
             .WithMessage("Email is required.")
             .EmailAddress()
-            .WithMessage("Invalid email address.")
-            .MustAsync(ValidationEmail)
-            .WithMessage("This email is already registered in the database");
+            .WithMessage("Invalid email address.") // TODO: Validate e-mail format
+            .MustAsync(ValidationEmail) 
+            .WithMessage("This email is already registered in the database"); // TODO: E-mail address must be unique
         ;
 
     }

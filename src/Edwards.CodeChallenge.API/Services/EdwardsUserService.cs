@@ -19,8 +19,13 @@ public class EdwardsUserService : IEdwardsUserService
     private readonly IDomainNotification _domainNotification;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
-    private readonly ConcurrentDictionary<string, EdwardsUserViewModel> _cache;
-    public EdwardsUserService(IEdwardsUserRepository edwardsUserRepository, ConcurrentDictionary<string, EdwardsUserViewModel> cache, IDomainNotification domainNotification, IUnitOfWork unitOfWork, IMapper mapper)
+    private readonly ConcurrentDictionary<string, EdwardsUserViewModel> _cache; // TODO: It should store the users in the memory.
+    public EdwardsUserService(
+        IEdwardsUserRepository edwardsUserRepository, 
+        ConcurrentDictionary<string, EdwardsUserViewModel> cache, 
+        IDomainNotification domainNotification, 
+        IUnitOfWork unitOfWork, 
+        IMapper mapper)
     {
         _edwardsUserRepository = edwardsUserRepository;
         _domainNotification = domainNotification;
@@ -73,7 +78,7 @@ public class EdwardsUserService : IEdwardsUserService
         }
 
         _edwardsUserRepository.Add(model);
-        //add to cache memory
+        // TODO: It should store the users in the memory.
         _cache.TryAdd(model.Id, edwardsUserVM);
         _unitOfWork.Commit();
 

@@ -3,10 +3,13 @@ using Edwards.CodeChallenge.API.Filters;
 using Edwards.CodeChallenge.API.Services;
 using Edwards.CodeChallenge.API.Services.Interfaces;
 using Edwards.CodeChallenge.API.ViewModels.User;
+using Edwards.CodeChallenge.Domain.Interfaces;
 using Edwards.CodeChallenge.Domain.Interfaces.Notifications;
 using Edwards.CodeChallenge.Domain.Interfaces.Repository;
 using Edwards.CodeChallenge.Domain.Interfaces.UoW;
+using Edwards.CodeChallenge.Domain.Models;
 using Edwards.CodeChallenge.Domain.Notifications;
+using Edwards.CodeChallenge.Infra;
 using Edwards.CodeChallenge.Infra.Context;
 using Edwards.CodeChallenge.Infra.Repository;
 using Edwards.CodeChallenge.Infra.UoW;
@@ -104,11 +107,15 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IEdwardsUserService, EdwardsUserService>();
 builder.Services.AddSingleton(_ => new ConcurrentDictionary<string, EdwardsUserViewModel>());
 
+builder.Services.Configure<FileConfig>(builder.Configuration.GetSection("FileServiceOptions"));
+builder.Services.AddScoped<IFileService, FileService>();
+
 builder.Services.AddScoped<IDomainNotification, DomainNotification>();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IEdwardsUserRepository, EdwardsUserRepository>();
 
+// TODO: bonus - Use SQLite database to store the data instead
 builder.Services.AddDbContext<EntityContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("USERDB")));
 

@@ -1,4 +1,5 @@
 ﻿using Edwards.CodeChallenge.API.Services;
+using Edwards.CodeChallenge.API.Services.Interfaces;
 using Edwards.CodeChallenge.API.ViewModels.User;
 using Edwards.CodeChallenge.Core.Tests.Mocks;
 using Edwards.CodeChallenge.Domain.Interfaces.Notifications;
@@ -10,9 +11,11 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
+using FluentAssertions; 
 
 namespace Edwards.CodeChallenge.Unit.Tests.Services
 {
+    // TODO: bonus - Add Unit testing to the project so that the main methods can be tested by the developer
     public class EdwardsUserServiceTest : ConfigBase
     {
         private readonly Mock<IEdwardsUserRepository> _edwardsUserRepositoryMock;
@@ -42,128 +45,137 @@ namespace Edwards.CodeChallenge.Unit.Tests.Services
         }
 
         [Fact]
-        public async Task GetAll_ReturnUsersViewModelTestAsync()
+        public async Task GetAllAsync_ReturnsListOfEdwardsUserViewModel()
         {
+            // Arrange
+            var expectedUsers = EdwardsUserMock.EdwardsUserModelFaker.Generate(3);
+            _edwardsUserRepositoryMock.Setup(x => x.GetAllAsync()).ReturnsAsync(expectedUsers);
 
-            _edwardsUserRepositoryMock.Setup(x => x.GetAllAsync())
-                .ReturnsAsync(EdwardsUserMock.EdwardsUserModelFaker.Generate(3));
+            // Act
+            var result = await GetEdwardsUserService().GetAllAsync();
 
-
-
-            var edwardsUserService = GetEdwardsUserService();
-
-            var customeMethod = await edwardsUserService.GetAllAsync();
-
-            var edwardsUserResult = Assert.IsAssignableFrom<IEnumerable<EdwardsUserViewModel>>(customeMethod);
-
-            Assert.NotNull(edwardsUserResult);
-            Assert.NotEmpty(edwardsUserResult);
+            // Assert
+            result.Should().NotBeNull()
+                .And.BeAssignableTo<IEnumerable<EdwardsUserViewModel>>()
+                .And.NotBeEmpty();
         }
 
         [Fact]
         public async Task GetById_ReturnEdwardsUserViewModelTestAsync()
         {
+            // Arrange
             var edwardsUserId = EdwardsUserMock.EdwardsUserIdViewModelFaker.Generate();
 
+            var expectedUser = EdwardsUserMock.EdwardsUserModelFaker.Generate();
             _edwardsUserRepositoryMock.Setup(x => x.GetByIdAsync(It.IsAny<string>()))
-                .ReturnsAsync(EdwardsUserMock.EdwardsUserModelFaker.Generate());
+                .ReturnsAsync(expectedUser);
 
-            var edwardsUserService = GetEdwardsUserService();
+            // Act
+            var result = await GetEdwardsUserService().GetByIdAsync(edwardsUserId);
 
-            var customeMethod = await edwardsUserService.GetByIdAsync(edwardsUserId);
-
-            var edwardsUserResult = Assert.IsAssignableFrom<EdwardsUserViewModel>(customeMethod);
-
-            Assert.NotNull(edwardsUserResult);
+            // Assert
+            result.Should().NotBeNull()
+                .And.BeOfType<EdwardsUserViewModel>()
+                .And.BeEquivalentTo(expectedUser);  
         }
 
         [Fact]
         public async Task GetUserByIdAsync_ReturnEdwardsUserViewModelTestAsync()
         {
+            // Arrange
             var edwardsUserId = EdwardsUserMock.EdwardsUserIdViewModelFaker.Generate();
 
+            var expectedUser = EdwardsUserMock.EdwardsUserModelFaker.Generate();
             _edwardsUserRepositoryMock.Setup(x => x.GetByIdAsync(It.IsAny<string>()))
-                .ReturnsAsync(EdwardsUserMock.EdwardsUserModelFaker.Generate());
+                .ReturnsAsync(expectedUser);
 
-            var edwardsUserService = GetEdwardsUserService();
+            // Act
+            var result = await GetEdwardsUserService().GetByIdAsync(edwardsUserId);
 
-            var customeMethod = await edwardsUserService.GetByIdAsync(edwardsUserId);
-
-            var edwardsUserResult = Assert.IsAssignableFrom<EdwardsUserViewModel>(customeMethod);
-
-            Assert.NotNull(edwardsUserResult);
+            // Assert
+            result.Should().NotBeNull()
+                .And.BeOfType<EdwardsUserViewModel>()
+                .And.BeEquivalentTo(expectedUser);  
         }
 
         [Fact]
         public async Task GetUserByNameAsync_ReturnEdwardsUserViewModelTestAsync()
         {
+            // Arrange
             var edwardsUserName = EdwardsUserMock.EdwardsUserNameViewModelFaker.Generate();
 
+            var expectedUser = EdwardsUserMock.EdwardsUserModelFaker.Generate();
             _edwardsUserRepositoryMock.Setup(x => x.GetByNameAsync(It.IsAny<string>()))
-                .ReturnsAsync(EdwardsUserMock.EdwardsUserModelFaker.Generate());
+                .ReturnsAsync(expectedUser);
 
-            var edwardsUserService = GetEdwardsUserService();
+            // Act
+            var result = await GetEdwardsUserService().GetByNameAsync(edwardsUserName);
 
-            var customeMethod = await edwardsUserService.GetByNameAsync(edwardsUserName);
-
-            var edwardsUserResult = Assert.IsAssignableFrom<EdwardsUserViewModel>(customeMethod);
-
-            Assert.NotNull(edwardsUserResult);
+            // Assert
+            result.Should().NotBeNull()
+                .And.BeOfType<EdwardsUserViewModel>()
+                .And.BeEquivalentTo(expectedUser);  
         }
+
         [Fact]
         public async Task GetUserByEmailAsync_ReturnEdwardsUserViewModelTestAsync()
         {
+            // Arrange
             var edwardsUserEmail = EdwardsUserMock.EdwardsUserEmailViewModelFaker.Generate();
 
+            var expectedUser = EdwardsUserMock.EdwardsUserModelFaker.Generate();
             _edwardsUserRepositoryMock.Setup(x => x.GetByEmailAsync(It.IsAny<string>()))
-                .ReturnsAsync(EdwardsUserMock.EdwardsUserModelFaker.Generate());
+                .ReturnsAsync(expectedUser);
 
-            var edwardsUserService = GetEdwardsUserService();
+            // Act
+            var result = await GetEdwardsUserService().GetByEmailAsync(edwardsUserEmail);
 
-            var customeMethod = await edwardsUserService.GetByEmailAsync(edwardsUserEmail);
-
-            var edwardsUserResult = Assert.IsAssignableFrom<EdwardsUserViewModel>(customeMethod);
-
-            Assert.NotNull(edwardsUserResult);
+            // Assert
+            result.Should().NotBeNull()
+                .And.BeOfType<EdwardsUserViewModel>()
+                .And.BeEquivalentTo(expectedUser); // Compare the result with the expected user object
         }
 
         [Fact]
         public async Task Add_ReturnEdwardsUserViewModelTestAsync()
         {
+            // Arrange
             var edwardsUser = EdwardsUserMock.EdwardsUserViewModelFaker.Generate();
 
             _edwardsUserRepositoryMock.Setup(x => x.GetByNameAsync(edwardsUser.FirstName))
                 .ReturnsAsync(EdwardsUserMock.EdwardsUserModelFaker.Generate());
 
-            var edwardsUserService = GetEdwardsUserService();
+            // Act
+            await GetEdwardsUserService().AddAsync(edwardsUser);
 
-            await edwardsUserService.AddAsync(edwardsUser);
-
-            Assert.NotNull(edwardsUser);
+            // Assert
+            edwardsUser.Should().NotBeNull();
         }
 
         [Fact]
-        public async Task Update_SucessTestAsync()
+        public async Task Update_SuccessTestAsync()
         {
+            // Arrange
             var edwardsUser = EdwardsUserMock.EdwardsUserViewModelFaker.Generate();
 
-            var edwardsUserService = GetEdwardsUserService();
+            // Act
+            await GetEdwardsUserService().UpdateAsync(edwardsUser);
 
-            await edwardsUserService.UpdateAsync(edwardsUser);
-
-            Assert.NotNull(edwardsUser);
+            // Assert
+            edwardsUser.Should().NotBeNull();
         }
 
         [Fact]
-        public async Task Remove_SucessTestAsync()
+        public async Task Remove_SuccessTestAsync()
         {
+            // Arrange
             var edwardsUser = EdwardsUserMock.EdwardsUserViewModelFaker.Generate();
 
-            var edwardsUserService = GetEdwardsUserService();
+            // Act
+            await GetEdwardsUserService().RemoveAsync(edwardsUser);
 
-            await edwardsUserService.RemoveAsync(edwardsUser);
-
-            Assert.NotNull(edwardsUser);
+            // Assert
+            edwardsUser.Should().NotBeNull();
         }
     }
 }

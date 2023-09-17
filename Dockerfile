@@ -16,4 +16,5 @@ COPY --from=development /app/out .
 # Set environment variable(s)
 
 ENV DB_CONNECTION_STRING__USERDB=Data Source=/data/data.sqlite
+ENV FileServiceOptions__FilePath=/data/dump_users.json
 ENTRYPOINT ["dotnet", "Edwards.CodeChallenge.API.dll"]

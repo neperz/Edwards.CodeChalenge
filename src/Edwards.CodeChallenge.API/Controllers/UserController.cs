@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Edwards.CodeChallenge.API.Controllers;
-
+// TODO: Host a web API for the user to call to manage the users
 [ApiController]
 [Produces("application/json")]
 [Route("api/v1/users")]
@@ -123,6 +123,7 @@ public class UserController : ControllerBase
     [HttpGet("email/{email}")]
     public async Task<ActionResult<EdwardsUserViewModel>> GetByEmail([FromQuery] EdwardsUserEmailViewModel edwardsUser)
     {
+        // TODO: Get a list of users with filter from the storage
         var edwardsUserVM = await _edwardsUserService.GetByEmailAsync(edwardsUser);
 
         if (edwardsUserVM == null)
@@ -153,6 +154,7 @@ public class UserController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<EdwardsUserViewModel>> PostUserAsync([FromBody] EdwardsUserViewModel edwardsUser)
     {
+        // TODO: Adding a new user to the storage.
         if (edwardsUser == null || string.IsNullOrWhiteSpace(edwardsUser.Email))
         {
             return NoContent();
@@ -183,6 +185,7 @@ public class UserController : ControllerBase
     [HttpPut("{id}")]
     public async Task<ActionResult> PutUser(string id, [FromBody] EdwardsUserViewModel edwardsUser)
     {
+        // TODO: Update a user in the storage
         if (!Guid.TryParse(id, out Guid userId))
             return BadRequest();
         if (edwardsUser == null || edwardsUser.Id.ToUpper() != userId.ToString().ToUpper())
@@ -220,6 +223,7 @@ public class UserController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<ActionResult> DeleteUser([FromQuery] EdwardsUserIdViewModel edwardsUser)
     {
+        // TODO: Deleting a user from the storage.
         var edwardsUserVM = await _edwardsUserService.GetByIdAsync(edwardsUser);
 
         if (edwardsUserVM == null)
