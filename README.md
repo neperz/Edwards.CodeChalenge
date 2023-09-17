@@ -35,24 +35,19 @@ Before running the application, ensure you have the following prerequisites inst
    cd Edwards.CodeChalenge/setup
    ```
 
-3. Build the Docker container:
+
+3. Run the Docker container on nginx:
 
    ```bash
-   docker build -t codechalenge .
+   .\run.sh
    ```
 
-4. Run the Docker container:
+   This will start two instances of the Web API application in a Docker container hosted on nginx load balace, exposing it on port 9999.
 
-   ```bash
-   docker run -d -p 5000:80 --name codechalenge user-api
-   ```
-
-   This will start the Web API application in a Docker container, exposing it on port 5000.
-
-5. Access the Swagger UI documentation by opening a web browser and navigating to:
+4. Access the Swagger UI documentation by opening a web browser and navigating to:
 
    ```
-   http://localhost:5000/swagger
+   http://localhost:9999/swagger
    ```
 
    Use Swagger UI to interact with the API and test its endpoints.
@@ -70,7 +65,7 @@ This will execute the unit tests and display the results in the console.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License 
 
 ## Acknowledgments
 
