@@ -13,9 +13,7 @@ using Edwards.CodeChallenge.Infra;
 using Edwards.CodeChallenge.Infra.Context;
 using Edwards.CodeChallenge.Infra.Repository;
 using Edwards.CodeChallenge.Infra.UoW;
-
 using Microsoft.AspNetCore.Builder;
-
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.ResponseCompression;
@@ -33,13 +31,7 @@ using System.IO.Compression;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-var webApplicationOptions = new WebApplicationOptions
-{
-    ContentRootPath = Directory.GetCurrentDirectory(),
-    Args = args,
-};
 
-//var builder = WebApplication.CreateBuilder(webApplicationOptions);
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration.AddEnvironmentVariables();
@@ -128,7 +120,7 @@ builder.Services.AddScoped<EntityContextSeed>();
 
 
 var app = builder.Build();
-app.MapGet("/ping", () => new { info = "pong", db = builder.Configuration.GetConnectionString("USERDB") });
+app.MapGet("/ping", () => new { info = "pong"});
 
 //poetic license to academic environment
 //if (!hostEnvironment.IsProduction())
