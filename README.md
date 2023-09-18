@@ -21,7 +21,32 @@ Before running the application, ensure you have the following prerequisites inst
 - [Docker](https://www.docker.com/get-started)
 - [SQLite](https://www.sqlite.org/index.html)
 
-## Getting Started
+## Quik Start
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/neperz/Edwards.CodeChalenge.git
+   ```
+
+2. Navigate to the project directory:
+
+   ```bash
+   cd Edwards.CodeChalenge/src/Edwards.CodeChallenge.API
+   ```
+
+3. Run project :
+
+   ```bash
+   dotnet run
+   ```
+4. Access the Swagger UI documentation by opening a web browser and navigating to:
+
+   ```
+   http://localhost:5000/swagger
+   ```
+
+   Use Swagger UI to interact with the API and test its endpoints.
+## Getting Started With Docker and Nginx
 
 1. Clone the repository:
 
