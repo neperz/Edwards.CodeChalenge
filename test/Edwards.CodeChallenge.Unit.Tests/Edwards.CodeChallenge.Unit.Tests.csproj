@@ -44,12 +44,7 @@
 		</None>
 	</ItemGroup>
 
-	<Target Name="GenerateHtmlCoverageReport" AfterTargets="GenerateCoverageResultAfterTest">
-		<ItemGroup>
-			<CoverageFiles Include="..\*\opencovertests.xml" />
-		</ItemGroup>
-		<ReportGenerator ReportFiles="@(CoverageFiles)" TargetDirectory="../code_coverage" HistoryDirectory="../code_coverage/history" ReportTypes="HtmlInline_AzurePipelines;lcov;Badges" />
-	</Target>
+
 	<Target Name="PostClean" AfterTargets="Clean">
 		<RemoveDir Directories="$(BaseIntermediateOutputPath)" />
 		<!-- obj -->
